@@ -71,7 +71,7 @@ Maxinterval
 
 ```
 
-Input Missing Values
+Input Missing Values - The Key strategy for filling in Missing values is to replace them with "Mean of Steps" present in Activity Data set.
 
 ```{r}
 ## finding the total no. of NA rows.

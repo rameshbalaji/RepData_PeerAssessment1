@@ -189,7 +189,7 @@ Maxinterval &lt;- subset(MeanStepsbyInterval,
 Maxinterval</code></pre>
 <pre><code>##     Interval AverageSteps
 ## 104      835     206.1698</code></pre>
-<p>Input Missing Values</p>
+<p>Input Missing Values - The Key strategy for filling in Missing values is to replace them with “Mean of Steps” present in Activity Data set.</p>
 <pre class="r"><code>## finding the total no. of NA rows.
 SumofNARows &lt;- sum(is.na(ActivityData))
 SumofNARows</code></pre>
