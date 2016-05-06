@@ -1,25 +1,145 @@
 ---
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
+title: "Activity Monitoring"
+author: "Ramesh Balaji"
+date: "1 May 2016"
+output: html_document
 ---
 
+Coming out Total Steps by Date based on Activity Data and print Histogram with Mean and Median:
+```{r echo=TRUE}
+    library(lattice)
+    setwd("C:/Ramesh/R Programs/Reproducible Research/repdata-data-activity")
+    ActivityData=read.csv("activity.csv",stringsAsFactors=FALSE)
+    str(ActivityData)
+    ## Total steps taken per day
+    TotalSteps <- aggregate(ActivityData$steps, by=list(date=ActivityData$date), 
+                            FUN=sum, na.rm=TRUE)
+    colnames(TotalSteps) <- c("Date","SumofStepsbyDate")
+    TotalStepsbyDate <- as.numeric(TotalSteps$SumofStepsbyDate)
 
-## Loading and preprocessing the data
+    ## Histogram of Total No. of Steps taken per day.
+hist(TotalStepsbyDate, 
+     main="Activity Data",
+     xlab="Total No. of Steps", 
+    border="black", 
+     col="red")
+
+## Mean of total steps taken per dy
+##MeanSteps <- aggregate(TotalSteps$SumofStepsbyDate, by=list(date=TotalSteps$Date),  FUN=mean, na.rm=TRUE)
+
+MeanSteps <- aggregate(ActivityData$steps, by=list(date=ActivityData$date),FUN=mean, na.rm=TRUE)
+
+colnames(MeanSteps) <- c("Date","MeanbyDate")
+
+MeanSteps$MeanbyDate
+
+## MedianSteps <- aggregate(TotalSteps$SumofStepsbyDate, by=list(date=TotalSteps$Date), FUN=median, na.rm=TRUE)
+
+MedianSteps <- aggregate(ActivityData$steps, by=list(date=ActivityData$date), FUN=median, na.rm=TRUE)
+
+colnames(MedianSteps) <- c("Date","MedianbyDate")
+MedianSteps$MedianbyDate
 
 
+```
 
-## What is mean total number of steps taken per day?
+Average Daily Activity Pattern
+
+```{r}
+
+## Average steps taken by Interval categories of 5 minutes.
+MeanStepsbyInterval <- aggregate(ActivityData$steps, 
+                                 by=list(interval=ActivityData$interval), 
+                                 FUN=mean, na.rm=TRUE)
+colnames(MeanStepsbyInterval) <- c("Interval","AverageSteps")
+
+## Plotting the pattern
+plot(MeanStepsbyInterval$Interval, MeanStepsbyInterval$AverageSteps , 
+     xlab = "Interval", 
+     ylab = "AverageSteps", 
+     type="l")
+
+## finding the max of the average steps
+MaxStepsbyIntervalbyDays <- max(MeanStepsbyInterval$AverageSteps,na.rm=TRUE)
+
+## finding the interval for the max step derived in earlier step through subset function
+Maxinterval <- subset(MeanStepsbyInterval,
+                      AverageSteps == max(MeanStepsbyInterval$AverageSteps,
+                        na.rm=TRUE))
+
+Maxinterval
+
+```
+
+Input Missing Values
+
+```{r}
+## finding the total no. of NA rows.
+SumofNARows <- sum(is.na(ActivityData))
+SumofNARows
+
+## if a specific step is "NA", then replacing it with Mean function of that step.
+ActivityData$steps[is.na(ActivityData$steps)] = mean(ActivityData$steps, na.rm=TRUE)
+
+## creating a new data frame with mean values filled in.
+ActivityData_New <- ActivityData
+```
+
+Coming out Total Steps by Date based on NEW Activity Data and print Histogram with Mean and Median 
+
+```{r}
+
+    TotalStepsNew <- aggregate(ActivityData_New$steps, by=list(date=ActivityData_New$date), 
+                            FUN=sum, na.rm=TRUE)
+    colnames(TotalStepsNew) <- c("Date","SumofStepsbyDate")
+    TotalStepsbyDateNew <- as.numeric(TotalStepsNew$SumofStepsbyDate)
+
+hist(TotalStepsbyDateNew, 
+     main="New Activity Data",
+     xlab="Total No. of Steps", 
+    border="black", 
+     col="red")
+
+## MeanStepsNew <- aggregate(TotalStepsNew$SumofStepsbyDate, by=list(date=TotalStepsNew$Date), FUN=mean, na.rm=TRUE)
+
+MeanStepsNew <- aggregate(ActivityData_New$steps, by=list(date=ActivityData_New$date), FUN=mean, na.rm=TRUE)
+
+colnames(MeanStepsNew) <- c("Date","MeanbyDate")
+MeanStepsNew$MeanbyDate
+
+## MedianStepsNew <- aggregate(TotalStepsNew$SumofStepsbyDate, by=list(date=TotalStepsNew$Date), FUN=median, na.rm=TRUE)
+
+MedianStepsNew <- aggregate(ActivityData_New$steps, by=list(date=ActivityData_New$date), FUN=median, na.rm=TRUE)
+
+colnames(MedianStepsNew) <- c("Date","MedianbyDate")
+MedianStepsNew$MedianbyDate
+
+```
+
+Based on the Histogram of Total no. of steps in new activity data (NA values filled with Mean) vs old activity data where there are NA values, we see the frequency of Steps moved from 25 to 35. We see the total no. of steps 
+
+```{r}
+## Totalsteps with NA's
+sum(TotalStepsbyDate)
+## Totalsteps with NA's replaced by Mean steps
+sum(TotalStepsbyDateNew)
+## Finding out the difference in steps.
+sum(TotalStepsbyDateNew) - sum(TotalStepsbyDate)
+```
 
 
+```{r}
+ActivityData_New$date <- as.Date(ActivityData_New$date)
+ActivityData_New$DayofWeek <- weekdays.Date(ActivityData_New$date,TRUE)
+ActivityData_New$WeekdayOrWeekend <- ifelse((ActivityData_New$DayofWeek == "Sat" | ActivityData_New$DayofWeek == "Sun"), "Weekend", "Weekday")
 
-## What is the average daily activity pattern?
+## create a new factor variable for weekdays and weekends
+ActivityData_New$WeekdayOrWeekend <- as.factor(ActivityData_New$WeekdayOrWeekend)
+str(ActivityData_New)
+
+xyplot(ActivityData_New$steps~ActivityData_New$interval|ActivityData_New$WeekdayOrWeekend,
+ylab="no of steps", xlab="interval", layout=(c(1,2)), type = "l")
 
 
+```
 
-## Imputing missing values
-
-
-
-## Are there differences in activity patterns between weekdays and weekends?
