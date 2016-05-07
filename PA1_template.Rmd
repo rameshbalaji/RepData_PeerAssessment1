@@ -122,7 +122,7 @@ MedianStepsNew$MedianbyDate
 
 ```
 
-Based on the Histogram of Total no. of steps in new activity data (NA values filled with Mean) vs old activity data where there are NA values, we see the frequency of Steps moved from 25 to 35. We see the total no. of steps 
+Based on the Histogram of Total no. of steps in new activity data (NA values filled with Mean) vs old activity data where there are NA values, we see the frequency of Steps moved from 25 to 35 in the Histogram.
 
 ```{r}
 ## Totalsteps with NA's
