@@ -126,11 +126,14 @@ sum(TotalStepsbyDateNew)
 ## Finding out the difference in steps.
 sum(TotalStepsbyDateNew) - sum(TotalStepsbyDate)
 ```
-
-
+Are there differences in activity patterns between weekdays and weekends?
 ```{r}
 ActivityData_New$date <- as.Date(ActivityData_New$date)
+
+## using weekday function to get weekdays from the date activity
 ActivityData_New$DayofWeek <- weekdays.Date(ActivityData_New$date,TRUE)
+
+## determining whether it is a weekend or weekday
 ActivityData_New$WeekdayOrWeekend <- ifelse((ActivityData_New$DayofWeek == "Sat" | ActivityData_New$DayofWeek == "Sun"), "Weekend", "Weekday")
 
 ## create a new factor variable for weekdays and weekends

@@ -252,8 +252,13 @@ sum(TotalStepsbyDateNew)</code></pre>
 <pre class="r"><code>## Finding out the difference in steps.
 sum(TotalStepsbyDateNew) - sum(TotalStepsbyDate)</code></pre>
 <pre><code>## [1] 86129.51</code></pre>
+<p>Are there differences in activity patterns between weekdays and weekends?</p>
 <pre class="r"><code>ActivityData_New$date &lt;- as.Date(ActivityData_New$date)
+
+## using weekday function to get weekdays from the date activity
 ActivityData_New$DayofWeek &lt;- weekdays.Date(ActivityData_New$date,TRUE)
+
+## determining whether it is a weekend or weekday
 ActivityData_New$WeekdayOrWeekend &lt;- ifelse((ActivityData_New$DayofWeek == &quot;Sat&quot; | ActivityData_New$DayofWeek == &quot;Sun&quot;), &quot;Weekend&quot;, &quot;Weekday&quot;)
 
 ## create a new factor variable for weekdays and weekends
