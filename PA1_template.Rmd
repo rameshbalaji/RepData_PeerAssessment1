@@ -7,7 +7,10 @@ output: html_document
 
 Loading and processing data from Activity Data set
 ```{r echo=TRUE}
+## loading the lattice function for displaying panel plot later in the assignment
     library(lattice)
+
+## Working directory to be setup and activity file is loaded to a Dataframe "ActivityData"
     setwd("C:/Ramesh/R Programs/Reproducible Research/repdata-data-activity")
     ActivityData=read.csv("activity.csv",stringsAsFactors=FALSE)
     str(ActivityData)
@@ -17,41 +20,34 @@ Coming out Total Steps by Date based on Activity Data, find out the Mean and Med
 
 ```{r echo=TRUE}
 
-    ## Total steps taken per day
+## Total steps taken per day
     TotalSteps <- aggregate(ActivityData$steps, by=list(date=ActivityData$date), 
                             FUN=sum, na.rm=TRUE)
     colnames(TotalSteps) <- c("Date","SumofStepsbyDate")
     TotalStepsbyDate <- as.numeric(TotalSteps$SumofStepsbyDate)
 
-    ## Histogram of Total No. of Steps taken per day.
+## Histogram of Total No. of Steps taken per day.
 hist(TotalStepsbyDate, 
      main="Activity Data",
      xlab="Total No. of Steps", 
     border="black", 
      col="red")
 
-## Mean of total steps taken per dy
-##MeanSteps <- aggregate(TotalSteps$SumofStepsbyDate, by=list(date=TotalSteps$Date),  FUN=mean, na.rm=TRUE)
-
+## Mean of total steps taken per day
 MeanSteps <- aggregate(ActivityData$steps, by=list(date=ActivityData$date),FUN=mean, na.rm=TRUE)
-
 colnames(MeanSteps) <- c("Date","MeanbyDate")
-
 MeanSteps$MeanbyDate
 
-## MedianSteps <- aggregate(TotalSteps$SumofStepsbyDate, by=list(date=TotalSteps$Date), FUN=median, na.rm=TRUE)
-
+## Median of total steps taken per day
 MedianSteps <- aggregate(ActivityData$steps, by=list(date=ActivityData$date), FUN=median, na.rm=TRUE)
-
 colnames(MedianSteps) <- c("Date","MedianbyDate")
 MedianSteps$MedianbyDate
-
 
 ```
 
 Average Daily Activity Pattern
 
-```{r}
+```{r echo=TRUE}
 
 ## Average steps taken by Interval categories of 5 minutes.
 MeanStepsbyInterval <- aggregate(ActivityData$steps, 
@@ -79,7 +75,7 @@ Maxinterval
 
 Input Missing Values - The Key strategy for filling in Missing values is to replace them with "Mean of Steps" present in Activity Data set.
 
-```{r}
+```{r echo=TRUE}
 ## finding the total no. of NA rows.
 SumofNARows <- sum(is.na(ActivityData))
 SumofNARows
@@ -93,30 +89,27 @@ ActivityData_New <- ActivityData
 
 Coming out Total Steps by Date based on NEW Activity Data and print Histogram with Mean and Median 
 
-```{r}
-
+```{r echo=TRUE}
+## Total steps taken per day after filling up the NA values
     TotalStepsNew <- aggregate(ActivityData_New$steps, by=list(date=ActivityData_New$date), 
                             FUN=sum, na.rm=TRUE)
     colnames(TotalStepsNew) <- c("Date","SumofStepsbyDate")
     TotalStepsbyDateNew <- as.numeric(TotalStepsNew$SumofStepsbyDate)
 
+## Printing the new Histogram with NA values  filled in
 hist(TotalStepsbyDateNew, 
      main="New Activity Data",
      xlab="Total No. of Steps", 
     border="black", 
      col="red")
 
-## MeanStepsNew <- aggregate(TotalStepsNew$SumofStepsbyDate, by=list(date=TotalStepsNew$Date), FUN=mean, na.rm=TRUE)
-
+## Mean of total steps taken per day after the NA values filled in
 MeanStepsNew <- aggregate(ActivityData_New$steps, by=list(date=ActivityData_New$date), FUN=mean, na.rm=TRUE)
-
 colnames(MeanStepsNew) <- c("Date","MeanbyDate")
 MeanStepsNew$MeanbyDate
 
-## MedianStepsNew <- aggregate(TotalStepsNew$SumofStepsbyDate, by=list(date=TotalStepsNew$Date), FUN=median, na.rm=TRUE)
-
+## Median of total steps taken per day after the NA values filled in
 MedianStepsNew <- aggregate(ActivityData_New$steps, by=list(date=ActivityData_New$date), FUN=median, na.rm=TRUE)
-
 colnames(MedianStepsNew) <- c("Date","MedianbyDate")
 MedianStepsNew$MedianbyDate
 
@@ -124,7 +117,7 @@ MedianStepsNew$MedianbyDate
 
 Based on the Histogram of Total no. of steps in new activity data (NA values filled with Mean) vs old activity data where there are NA values, we see the frequency of Steps moved from 25 to 35 in the Histogram.
 
-```{r}
+```{r echo=TRUE}
 ## Totalsteps with NA's
 sum(TotalStepsbyDate)
 ## Totalsteps with NA's replaced by Mean steps
@@ -132,7 +125,10 @@ sum(TotalStepsbyDateNew)
 ## Finding out the difference in steps.
 sum(TotalStepsbyDateNew) - sum(TotalStepsbyDate)
 ```
-Are there differences in activity patterns between weekdays and weekends?
+
+Finding and Printing differences in activity patterns between weekdays and weekends in a panel plot
+
+
 ```{r}
 ActivityData_New$date <- as.Date(ActivityData_New$date)
 
