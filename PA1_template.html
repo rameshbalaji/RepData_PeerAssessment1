@@ -238,14 +238,14 @@ MedianStepsNew$MedianbyDate</code></pre>
 ## [41] 37.3826  0.0000  0.0000  0.0000 37.3826  0.0000  0.0000  0.0000
 ## [49]  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000
 ## [57]  0.0000  0.0000  0.0000  0.0000 37.3826</code></pre>
-<p>Based on the Histogram of Total no. of steps in new activity data (NA values filled with Mean) vs old activity data where there are NA values, we see the frequency of Steps moved from 25 to 35 in the Histogram.</p>
+<p>Based on the Histogram of Total no. of steps in new activity data (NA values filled with Mean) vs old activity data where there are NA values, we see the IMPACT in terms of “Difference in number of steps”</p>
 <pre class="r"><code>## Totalsteps with NA's
 sum(TotalStepsbyDate)</code></pre>
 <pre><code>## [1] 570608</code></pre>
 <pre class="r"><code>## Totalsteps with NA's replaced by Mean steps
 sum(TotalStepsbyDateNew)</code></pre>
 <pre><code>## [1] 656737.5</code></pre>
-<pre class="r"><code>## Finding out the difference in steps.
+<pre class="r"><code>## Finding out the difference in steps. This is the IMPACT that we see when the NA values are filled in.
 sum(TotalStepsbyDateNew) - sum(TotalStepsbyDate)</code></pre>
 <pre><code>## [1] 86129.51</code></pre>
 <p>Finding and Printing differences in activity patterns between weekdays and weekends in a panel plot</p>
