@@ -115,7 +115,7 @@ $(document).ready(function () {
 </div>
 
 
-<p>Coming out Total Steps by Date based on Activity Data and print Histogram with Mean and Median:</p>
+<p>Loading and processing data from Activity Data set</p>
 <pre class="r"><code>    library(lattice)
     setwd(&quot;C:/Ramesh/R Programs/Reproducible Research/repdata-data-activity&quot;)
     ActivityData=read.csv(&quot;activity.csv&quot;,stringsAsFactors=FALSE)
@@ -124,6 +124,7 @@ $(document).ready(function () {
 ##  $ steps   : int  NA NA NA NA NA NA NA NA NA NA ...
 ##  $ date    : chr  &quot;2012-10-01&quot; &quot;2012-10-01&quot; &quot;2012-10-01&quot; &quot;2012-10-01&quot; ...
 ##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...</code></pre>
+<p>Coming out Total Steps by Date based on Activity Data, find out the Mean and Median and print Histogram with Mean and Median</p>
 <pre class="r"><code>    ## Total steps taken per day
     TotalSteps &lt;- aggregate(ActivityData$steps, by=list(date=ActivityData$date), 
                             FUN=sum, na.rm=TRUE)

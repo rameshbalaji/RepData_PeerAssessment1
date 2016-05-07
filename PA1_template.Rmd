@@ -5,12 +5,18 @@ date: "1 May 2016"
 output: html_document
 ---
 
-Coming out Total Steps by Date based on Activity Data and print Histogram with Mean and Median:
+Loading and processing data from Activity Data set
 ```{r echo=TRUE}
     library(lattice)
     setwd("C:/Ramesh/R Programs/Reproducible Research/repdata-data-activity")
     ActivityData=read.csv("activity.csv",stringsAsFactors=FALSE)
     str(ActivityData)
+```
+
+Coming out Total Steps by Date based on Activity Data, find out the Mean and Median and print Histogram with Mean and Median
+
+```{r echo=TRUE}
+
     ## Total steps taken per day
     TotalSteps <- aggregate(ActivityData$steps, by=list(date=ActivityData$date), 
                             FUN=sum, na.rm=TRUE)
