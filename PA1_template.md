@@ -42,7 +42,7 @@ hist(TotalStepsbyDate,
      col="red")
 ```
 
-![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png) 
+![plot of chunk unnamed-chunk-2](figure/figure1.png) 
 
 ```r
 ## Mean of total steps taken per day
@@ -95,7 +95,7 @@ plot(MeanStepsbyInterval$Interval, MeanStepsbyInterval$AverageSteps ,
      type="l")
 ```
 
-![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png) 
+![plot of chunk unnamed-chunk-3](figure/figure2.png) 
 
 ```r
 ## finding the max of the average steps
@@ -153,7 +153,7 @@ hist(TotalStepsbyDateNew,
      col="red")
 ```
 
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
+![plot of chunk unnamed-chunk-5](figure/figure3.png) 
 
 ```r
 ## Mean of total steps taken per day after the NA values filled in
@@ -256,5 +256,5 @@ xyplot(ActivityData_New$steps~ActivityData_New$interval|ActivityData_New$Weekday
 ylab="no of steps", xlab="interval", layout=(c(1,2)), type = "l")
 ```
 
-![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png) 
+![plot of chunk unnamed-chunk-7](figure/figure4.png) 
 
